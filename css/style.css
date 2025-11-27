@@ -8,6 +8,8 @@ html,
 body {
 	height: 100%;
 	background-color: #000;
+	overflow: hidden;
+	/* Добавляем чтобы избежать лишних скроллов */
 }
 
 :root {
@@ -16,6 +18,8 @@ body {
 
 .slider {
 	height: 100%;
+	width: 100%;
+	/* Явно указываем ширину */
 }
 
 .slider__layer {
@@ -23,31 +27,34 @@ body {
 	inset: 0;
 	background-size: cover;
 	background-position: center;
+	background-repeat: no-repeat;
+	/* Важно для мобильных */
 	will-change: transform;
-
-	/* transition: var(--transition) !important; */
-	/* подключать с :
-	freeMode: true - свободная прокрутка */
+	/* Исправляем опечатку в псевдоэлементе - убираем пробел */
 }
 
-.slider__layer ::before {
+.slider__layer::before {
+	/* УБРАТЬ ПРОБЕЛ перед ::before */
 	content: '';
 	position: absolute;
 	inset: 0;
 	z-index: 1;
-	box-shadow: inset 0 0 250px rgb(0, 0, 0 / .3);
+	box-shadow: inset 0 0 250px rgb(0 0 0 / 0.3);
 }
 
 .slider__item {
 	overflow: hidden;
+	position: relative;
+	/* Добавляем для корректного позиционирования слоев */
+	height: 100%;
+	/* Явно указываем высоту */
 }
 
 .slider__wrapper {
 	will-change: transform;
 	transform-style: preserve-3d;
-	/* transition: var(--transition) !important; */
-	/* подключать с :
-	freeMode: true - свободная прокрутка */
+	height: 100%;
+	/* Добавляем высоту */
 }
 
 /* ===== АДАПТИВНОСТЬ ===== */
@@ -69,11 +76,22 @@ body {
 		--transition: 1.2s cubic-bezier(.2, .6, 0, 1);
 	}
 
+	.slider {
+		height: 100vh;
+		/* Используем vh для мобильных */
+		min-height: -webkit-fill-available;
+		/* Для iOS */
+	}
+
 	.slider__layer::before {
 		box-shadow: inset 0 0 100px rgb(0 0 0 / 0.5);
 	}
 
-	/* Уменьшаем интенсивность тени для мобильных устройств */
+	/* Убедимся что изображения загружаются */
+	.slider__layer {
+		background-size: cover;
+		background-position: center;
+	}
 }
 
 /* Телефоны */
@@ -82,14 +100,18 @@ body {
 		--transition: 1s cubic-bezier(.2, .6, 0, 1);
 	}
 
+	.slider {
+		height: 100vh;
+		min-height: -webkit-fill-available;
+	}
+
 	.slider__layer::before {
 		box-shadow: inset 0 0 60px rgb(0 0 0 / 0.6);
 	}
 
-	/* Можно добавить дополнительные стили для очень маленьких экранов */
-	.slider {
-		min-height: 100vh;
-		height: auto;
+	/* Убедимся что контент виден */
+	.slider__item {
+		height: 100vh;
 	}
 }
 
@@ -110,7 +132,7 @@ body {
 /* Портретная ориентация */
 @media (max-height: 500px) and (orientation: landscape) {
 	.slider {
-		min-height: 100vh;
+		height: 100vh;
 	}
 
 	.slider__layer::before {
@@ -147,7 +169,6 @@ body {
 		display: none;
 	}
 
-	/* Увеличиваем область клика для пагинации */
 	.swiper-pagination-bullet {
 		width: 10px;
 		height: 10px;
@@ -188,23 +209,18 @@ body {
 	}
 }
 
-
-
-
-
-
 /* Стили для всплывающего текста */
 .text-overlay {
 	position: absolute;
 	top: 5%;
 	left: 5%;
-	transform: translateY(-50%);
 	z-index: 5;
 	color: #fff;
 	max-width: 500px;
 	opacity: 0;
 	animation: textAppear 2s ease-in-out forwards;
 	animation-delay: 0.8s;
+	/* Убрано transform: translateY(-50%) чтобы не смещало текст */
 }
 
 .text-title {
@@ -298,12 +314,14 @@ body {
 	}
 
 	.text-subtitle {
-		font-size: 1.3rem;
+		font-size: 1.5rem;
 	}
 }
 
 @media (max-width: 768px) {
 	.text-overlay {
+		top: 10%;
+		/* Поднимаем текст выше на мобильных */
 		left: 5%;
 		right: 5%;
 		max-width: none;
@@ -311,21 +329,25 @@ body {
 	}
 
 	.text-title {
-		font-size: 2.5rem;
+		font-size: 2.2rem;
 	}
 
 	.text-subtitle {
-		font-size: 1.2rem;
+		font-size: 1.3rem;
 	}
 
 	.text-description {
-		font-size: 1rem;
+		font-size: 1.1rem;
 	}
 }
 
 @media (max-width: 480px) {
+	.text-overlay {
+		top: 8%;
+	}
+
 	.text-title {
-		font-size: 2rem;
+		font-size: 1.8rem;
 	}
 
 	.text-subtitle {
