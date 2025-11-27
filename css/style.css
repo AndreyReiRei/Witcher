@@ -22,6 +22,7 @@ body {
 	position: absolute;
 	inset: 0;
 	background-size: cover;
+	background-position: center;
 	will-change: transform;
 
 	/* transition: var(--transition) !important; */
@@ -47,4 +48,303 @@ body {
 	/* transition: var(--transition) !important; */
 	/* подключать с :
 	freeMode: true - свободная прокрутка */
+}
+
+/* ===== АДАПТИВНОСТЬ ===== */
+
+/* Планшеты и маленькие ноутбуки */
+@media (max-width: 1024px) {
+	:root {
+		--transition: 1.4s cubic-bezier(.2, .6, 0, 1);
+	}
+
+	.slider__layer::before {
+		box-shadow: inset 0 0 150px rgb(0 0 0 / 0.4);
+	}
+}
+
+/* Планшеты (портрет) и большие телефоны */
+@media (max-width: 768px) {
+	:root {
+		--transition: 1.2s cubic-bezier(.2, .6, 0, 1);
+	}
+
+	.slider__layer::before {
+		box-shadow: inset 0 0 100px rgb(0 0 0 / 0.5);
+	}
+
+	/* Уменьшаем интенсивность тени для мобильных устройств */
+}
+
+/* Телефоны */
+@media (max-width: 480px) {
+	:root {
+		--transition: 1s cubic-bezier(.2, .6, 0, 1);
+	}
+
+	.slider__layer::before {
+		box-shadow: inset 0 0 60px rgb(0 0 0 / 0.6);
+	}
+
+	/* Можно добавить дополнительные стили для очень маленьких экранов */
+	.slider {
+		min-height: 100vh;
+		height: auto;
+	}
+}
+
+/* Очень маленькие телефоны */
+@media (max-width: 320px) {
+	.slider__layer::before {
+		box-shadow: inset 0 0 40px rgb(0 0 0 / 0.7);
+	}
+}
+
+/* Большие экраны (4K и выше) */
+@media (min-width: 1600px) {
+	.slider__layer::before {
+		box-shadow: inset 0 0 400px rgb(0 0 0 / 0.2);
+	}
+}
+
+/* Портретная ориентация */
+@media (max-height: 500px) and (orientation: landscape) {
+	.slider {
+		min-height: 100vh;
+	}
+
+	.slider__layer::before {
+		box-shadow: inset 0 0 80px rgb(0 0 0 / 0.5);
+	}
+}
+
+/* Высокие экраны */
+@media (min-height: 1000px) {
+	.slider__layer::before {
+		box-shadow: inset 0 0 350px rgb(0 0 0 / 0.2);
+	}
+}
+
+/* Стили для навигационных кнопок */
+.swiper-button-next,
+.swiper-button-prev {
+	width: 50px;
+	height: 50px;
+	color: #fff;
+	transition: opacity 0.3s ease;
+}
+
+.swiper-button-next:after,
+.swiper-button-prev:after {
+	font-size: 24px;
+}
+
+/* Скрываем кнопки на мобильных */
+@media (max-width: 768px) {
+
+	.swiper-button-next,
+	.swiper-button-prev {
+		display: none;
+	}
+
+	/* Увеличиваем область клика для пагинации */
+	.swiper-pagination-bullet {
+		width: 10px;
+		height: 10px;
+		margin: 0 6px !important;
+	}
+}
+
+/* Адаптивность для пагинации */
+.swiper-pagination {
+	position: absolute;
+	bottom: 20px !important;
+}
+
+@media (max-width: 480px) {
+	.swiper-pagination {
+		bottom: 10px !important;
+	}
+
+	.swiper-pagination-bullet {
+		width: 8px;
+		height: 8px;
+		margin: 0 4px !important;
+	}
+}
+
+/* Большие экраны */
+@media (min-width: 1440px) {
+
+	.swiper-button-next,
+	.swiper-button-prev {
+		width: 60px;
+		height: 60px;
+	}
+
+	.swiper-button-next:after,
+	.swiper-button-prev:after {
+		font-size: 28px;
+	}
+}
+
+
+
+
+
+
+/* Стили для всплывающего текста */
+.text-overlay {
+	position: absolute;
+	top: 5%;
+	left: 5%;
+	transform: translateY(-50%);
+	z-index: 5;
+	color: #fff;
+	max-width: 500px;
+	opacity: 0;
+	animation: textAppear 2s ease-in-out forwards;
+	animation-delay: 0.8s;
+}
+
+.text-title {
+	font-size: 4rem;
+	font-weight: 700;
+	margin-bottom: 1rem;
+	text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+	opacity: 0;
+	transform: translateY(30px);
+	animation: titleAppear 1.2s ease forwards;
+	animation-delay: 1s;
+}
+
+.text-subtitle {
+	font-size: 2rem;
+	margin-bottom: 1.5rem;
+	color: #ea3e38;
+	text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
+	opacity: 0;
+	transform: translateY(20px);
+	animation: subtitleAppear 1s ease forwards;
+	animation-delay: 1.4s;
+}
+
+.text-description {
+	font-size: 1.4rem;
+	line-height: 1.6;
+	text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
+	opacity: 0;
+	transform: translateY(20px);
+	animation: descriptionAppear 1s ease forwards;
+	animation-delay: 1.8s;
+}
+
+/* Анимации */
+@keyframes textAppear {
+	from {
+		opacity: 0;
+	}
+
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes titleAppear {
+	from {
+		opacity: 0;
+		transform: translateY(30px);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@keyframes subtitleAppear {
+	from {
+		opacity: 0;
+		transform: translateY(20px);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@keyframes descriptionAppear {
+	from {
+		opacity: 0;
+		transform: translateY(20px);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+/* Адаптивность для текста */
+@media (max-width: 1024px) {
+	.text-overlay {
+		left: 5%;
+		max-width: 400px;
+	}
+
+	.text-title {
+		font-size: 3rem;
+	}
+
+	.text-subtitle {
+		font-size: 1.3rem;
+	}
+}
+
+@media (max-width: 768px) {
+	.text-overlay {
+		left: 5%;
+		right: 5%;
+		max-width: none;
+		text-align: center;
+	}
+
+	.text-title {
+		font-size: 2.5rem;
+	}
+
+	.text-subtitle {
+		font-size: 1.2rem;
+	}
+
+	.text-description {
+		font-size: 1rem;
+	}
+}
+
+@media (max-width: 480px) {
+	.text-title {
+		font-size: 2rem;
+	}
+
+	.text-subtitle {
+		font-size: 1.1rem;
+	}
+
+	.text-description {
+		font-size: 0.9rem;
+	}
+}
+
+/* Для очень широких экранов */
+@media (min-width: 1600px) {
+	.text-overlay {
+		left: 15%;
+		max-width: 600px;
+	}
+
+	.text-title {
+		font-size: 5rem;
+	}
 }

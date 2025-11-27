@@ -1,0 +1,10 @@
+Загружаем проект в репозиторий.
+в терминале прописываем:
+
+echo "# Ведьмак" >> README.md
+git init
+git add README.md
+git commit -m "первый коммит"
+git branch -M main
+git remote add origin https://github.com/AndreyReiRei/Witcher.git
+git push -u origin main
